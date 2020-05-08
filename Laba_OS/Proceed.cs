@@ -5,12 +5,16 @@ namespace Laba_OS_2
 {
     class Proceed
     {
+        private delegate string SearchBlock(string block);
+        const int MAX_FILE_SYS_SIZE = 100;
+
         public static void ProceedFileSystemFunc()
         {
-            string file_system;
-            string[] fields = new string[100];
-            bool[] check_arr = new bool[100];
-            string A = " ", B = " ", C = " ", D = " ";
+            string file_system;            
+            string[] fields = new string[MAX_FILE_SYS_SIZE];
+            bool[] check_arr = new bool[MAX_FILE_SYS_SIZE];
+            string A, B, C, D;
+            A = B = C = D = string.Empty;
             string[] search_value = new string[10];
 
             string file_name = "FileSystem.txt";
@@ -31,100 +35,59 @@ namespace Laba_OS_2
                 
             string[] fils = file_system.Split(' ');
 
-            for (int i = 0; fils[i] != "EndOfFile"; i++)
+            int index = 0;
+            for (int i = 0; fils[i] != "A"; i++)
             {
-                if (i < 50)
+                fields[i] = fils[i];
+                check_arr[i] = false;
+                index = i;
+            }
+
+            for (int i = index; fils[i] != "EndOfFile"; i++)
+            {
+                switch (fils[i])
                 {
-                    fields[i] = fils[i];
-                    check_arr[i] = false;
-                }
-                else
-                {
-                    switch (fils[i])
-                    {
-                        case "A":
-                            A = fils[i + 1];
-                            break;
-                        case "B":
-                            B = fils[i + 1];
-                            break;
-                        case "C":
-                            C = fils[i + 1];
-                            break;
-                        case "D":
-                            D = fils[i + 1];
-                            break;
-                    }
+                    case "A":
+                        A = fils[i + 1];
+                        break;
+                    case "B":
+                        B = fils[i + 1];
+                        break;
+                    case "C":
+                        C = fils[i + 1];
+                        break;
+                    case "D":
+                        D = fils[i + 1];
+                        break;
                 }
             }
 
-            for (int j = 0; j < 4; j++)
+            SearchBlock sb = (string block) =>
             {
-                if (j == 0)
+                int temp = int.Parse(block);
+                do
                 {
-                    int TempValue = Convert.ToInt32(A);
-                    do
-                    {
-                        A = A + ' ' + fields[TempValue];
-                        check_arr[TempValue] = true;
-                        TempValue = Convert.ToInt32(fields[TempValue]);
-                    }
-                    while (fields[TempValue] != "eof");
-                    check_arr[TempValue] = true;
-                    A = A + ' ' + "eof";
-                    Console.WriteLine("A: " + A);
-                }
-                else if (j == 1)
-                {
-                    int temp = 0;
-                    temp = Convert.ToInt32(B);
-                    do
-                    {
-                        B = B + ' ' + fields[temp];
-                        check_arr[temp] = true;
-                        temp = Convert.ToInt32(fields[temp]);
-                    }
-                    while (fields[temp] != "eof");
+                    block = block + ' ' + fields[temp];
                     check_arr[temp] = true;
-                    B = B + ' ' + "eof";
-                    Console.WriteLine("B: " + B);
+                    temp = int.Parse(fields[temp]);
                 }
-                if (j == 2)
-                {
-                    int temp = 0;
-                    temp = Convert.ToInt32(C);
-                    do
-                    {
-                        C = C + ' ' + fields[temp];
-                        check_arr[temp] = true;
-                        temp = Convert.ToInt32(fields[temp]);
-                    }
-                    while (fields[temp] != "eof");
-                    check_arr[temp] = true;
-                    C = C + ' ' + "eof";
-                    Console.WriteLine("C: " + C);
-                }
-                if (j == 3)
-                {
-                    int temp = 0;
-                    temp = Convert.ToInt32(D);
-                    do
-                    {
-                        D = D + ' ' + fields[temp];
-                        check_arr[temp] = true;
-                        temp = Convert.ToInt32(fields[temp]);
-                    }
-                    while (fields[temp] != "eof");
-                    check_arr[temp] = true;
-                    D = D + ' ' + "eof";
-                    Console.WriteLine("D: " + D);
-                }
-            }
-            for (int j = 0; j < 50; j++)
-            {
-                if (fields[j] == "bad")
-                    check_arr[j] = true;
-            }
+                while (fields[temp] != "eof");
+
+                check_arr[temp] = true;
+                block = block + ' ' + "eof";
+                Console.WriteLine("A: " + block);
+                return block;
+            };
+
+            A = sb(A);
+            B = sb(B);
+            C = sb(C);
+            D = sb(D);
+
+            for (int i = 0; i < fields.Length; i++)
+                if (fields[i] == "bad")
+                    check_arr[i] = true;
+            
             search_value = NotEmpty(check_arr, fields);
             string[] Splited = new string[3];
             for (int j = 0; j < 5; j++)
@@ -163,13 +126,13 @@ namespace Laba_OS_2
                             {
                                 if (j < 5)
                                 {
-                                    for (k = Convert.ToInt32(TempC[j]); k < 50; k++)
+                                    for (k = int.Parse(TempC[j]); k < 50; k++)
                                     {
                                         if (Fields[k] == "0" && j < 5)
                                         {
                                             Fields[k] = "Taken";
                                             TempC[j] = k.ToString();
-                                            Fields[Convert.ToInt32((TempC[j - 1]))] = k.ToString();
+                                            Fields[int.Parse((TempC[j - 1]))] = k.ToString();
                                             break;
                                         }
                                     }
@@ -188,13 +151,13 @@ namespace Laba_OS_2
                             {
                                 if (j < 5)
                                 {
-                                    for (k = Convert.ToInt32(TempD[j]); k < 50; k++)
+                                    for (k = int.Parse(TempD[j]); k < 50; k++)
                                     {
                                         if (Fields[k] == "0" && j < 5)
                                         {
                                             Fields[k] = "1";
                                             TempD[j] = k.ToString();
-                                            Fields[Convert.ToInt32((TempD[j - 1]))] = k.ToString();
+                                            Fields[int.Parse((TempD[j - 1]))] = k.ToString();
                                             break;
                                         }
                                     }
@@ -236,33 +199,33 @@ namespace Laba_OS_2
             return Temp;
         }
 
-        public static string[] NotEmpty(bool[] Checked, string[] Fields)
+        public static string[] NotEmpty(bool[] check_arr, string[] fields)
         {
-            int Temp = 0, i = 0, j = 0;
-            string[] NewFile = new string[5];
+            int temp = 0, i = 0, j = 0;
+            string[] new_file = new string[5];
             do
             {
-                Temp = i;
-                if ((Checked[i] == false) && (Fields[i] != "0"))
+                temp = i;
+                if ((check_arr[i] == false) && (fields[i] != "0"))
                 {
                     if (j < 4)
-                        NewFile[j] = NewFile[j] + i;
-                    while ((Fields[Temp] != "eof") && Checked[Temp] == false)
+                        new_file[j] = new_file[j] + i;
+                    while ((fields[temp] != "eof") && check_arr[temp] == false)
                     {
-                        NewFile[j] = NewFile[j] + ' ' + Fields[Temp];
-                        Checked[Temp] = true;
-                        Temp = Convert.ToInt32(Fields[Temp]);
+                        new_file[j] = new_file[j] + ' ' + fields[temp];
+                        check_arr[temp] = true;
+                        temp = int.Parse(fields[temp]);
                     }
-                    if (Fields[Temp] == "eof")
+                    if (fields[temp] == "eof")
                     {
-                        NewFile[j] = NewFile[j] + ' ' + "eof";
+                        new_file[j] = new_file[j] + ' ' + "eof";
                         j++;
                     }
                 }
                 i++;
             }
             while (i < 50);
-            return NewFile;
+            return new_file;
         }
     }
 

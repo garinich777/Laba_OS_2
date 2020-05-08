@@ -59,18 +59,18 @@ namespace Laba_OS_2
         }
         public static void ShowInformation()
         {
-            Console.WriteLine("-------------------Welcome---------------------");
-            Console.WriteLine("-------To continue, select the menu item-------");
-            Console.WriteLine("-----------------------------------------------");
-            Console.WriteLine("--------------------1.About--------------------");
-            Console.WriteLine("--------------------2.Proceed------------------");
-            Console.WriteLine("--------------------3.Exit---------------------");
-            Console.WriteLine("-----------------------------------------------");
+            Console.WriteLine();
+            Console.WriteLine("To continue, select the menu item");
+            Console.WriteLine();
+            Console.WriteLine("1.About");
+            Console.WriteLine("2.Proceed");
+            Console.WriteLine("3.Exit");
+            Console.Write("menu item:");
         }
         public static void AboutProgram()
         {
             Console.WriteLine("This program analyze the state of file system and suggest ways to optimize it");
-            Console.WriteLine("Bogdan Kluev, 484g, 2020");
+            Console.WriteLine("Osipov Igor, 484g, 2020");
             return;
         }
    
